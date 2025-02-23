@@ -63,49 +63,93 @@ function removeActive() {
 }
 
 
+
+
+//Секундомер 
+
 let stopSeconds = document.querySelector(".stopwatch__seconds"),
-    stopMinutes = document.querySelector(".stopwatch__minutes"),
-    stopHours = document.querySelector(".stopwatch__hours"),
-    stopBtn = document.querySelector('.stopwatch__btn'),
-    span = document.querySelector('.tabsLink__span')
+      stopMinutes = document.querySelector(".stopwatch__minutes"),
+      stopHours = document.querySelector(".stopwatch__hours"),
+      stopBtn = document.querySelector(".stopwatch__btn"),
+      span = document.querySelector(".tabsLink__span");
+
+let timer = null;
+
+const startStopwatch = () => {
+    let seconds = 0;
+    timer = setInterval(() => {
+        seconds++;
+        stopSeconds.innerHTML = seconds % 60;
+        stopMinutes.innerHTML = Math.floor((seconds / 60) % 60);
+        stopHours.innerHTML = Math.floor(seconds / 3600);
+    }, 1000);
+};
+
+stopBtn.addEventListener("click", () => {
+    if (stopBtn.innerHTML === "start") {
+        stopBtn.innerHTML = "stop";
+        span.classList.add("active");
+        startStopwatch();
+    } else if (stopBtn.innerHTML === "stop") {
+        stopBtn.innerHTML = "clear";
+        span.classList.replace("active", "active_clear");
+        clearInterval(timer);
+    } else {
+        stopBtn.innerHTML = "start";
+        span.classList.remove("active_clear");
+        stopSeconds.innerHTML = 0;
+        stopMinutes.innerHTML = 0;
+        stopHours.innerHTML = 0;
+    }
+});
+
+
+
+
+
+// let stopSeconds = document.querySelector(".stopwatch__seconds"),
+//     stopMinutes = document.querySelector(".stopwatch__minutes"),
+//     stopHours = document.querySelector(".stopwatch__hours"),
+//     stopBtn = document.querySelector('.stopwatch__btn'),
+//     span = document.querySelector('.tabsLink__span')
 
     
-stopBtn.addEventListener('click', () => {
-    if(stopBtn.innerHTML == 'start') {
-            stopBtn.innerHTML = 'stop'
-            span.classList.add('active')
-            let i = 0
-            setTimeout(() => startSecundomer(stopBtn, i), 1000)
-        }else if(stopBtn.innerHTML == 'stop') {
-            stopBtn.innerHTML = 'clear'
-            span.classList.remove('active')
-            span.classList.add('active_clear')
-        }else {
-            stopBtn.innerHTML = 'clear'
-            span.classList.remove('active_clear')
-            stopSeconds.innerHTML = 0
-            stopMinutes.innerHTML = 0
-            stopHours.innerHTML = 0
-            setTimeout( () => stopBtn.innerHTML = 'start', 2500)
-        }
-    })
+// stopBtn.addEventListener('click', () => {
+//     if(stopBtn.innerHTML == 'start') {
+//             stopBtn.innerHTML = 'stop'
+//             span.classList.add('active')
+//             let i = 0
+//             setTimeout(() => startSecundomer(stopBtn, i), 1000)
+//         }else if(stopBtn.innerHTML == 'stop') {
+//             stopBtn.innerHTML = 'clear'
+//             span.classList.remove('active')
+//             span.classList.add('active_clear')
+//         }else {
+//             stopBtn.innerHTML = 'clear'
+//             span.classList.remove('active_clear')
+//             stopSeconds.innerHTML = 0
+//             stopMinutes.innerHTML = 0
+//             stopHours.innerHTML = 0
+//             setTimeout( () => stopBtn.innerHTML = 'start', 2500)
+//         }
+//     })
 
-    function startSecundomer(btn, i) {
-        if(btn.innerHTML == 'stop') {
-            if(i == 59) {
-                i = 0
-                stopSeconds.innerHTML = i
-                if(stopMinutes.innerHTML == 59) {
-                    stopMinutes.innerHTML = 0
-                    stopHours.innerHTML++
-                }else {
-                    stopMinutes.innerHTML++
-                }
-            }else {
-                i++
-                stopSeconds.innerHTML = i
-            }
-            setTimeout(() => startSecundomer(btn, i), 1000)
-        }
-    }
+//     function startSecundomer(btn, i) {
+//         if(btn.innerHTML == 'stop') {
+//             if(i == 59) {
+//                 i = 0
+//                 stopSeconds.innerHTML = i
+//                 if(stopMinutes.innerHTML == 59) {
+//                     stopMinutes.innerHTML = 0
+//                     stopHours.innerHTML++
+//                 }else {
+//                     stopMinutes.innerHTML++
+//                 }
+//             }else {
+//                 i++
+//                 stopSeconds.innerHTML = i
+//             }
+//             setTimeout(() => startSecundomer(btn, i), 1000)
+//         }
+//     }
 
